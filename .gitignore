@@ -1,3 +1,4 @@
 .idea/
 NEUOJ-NG-backend
 config.toml
+*.log

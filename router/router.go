@@ -1,11 +1,10 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	c "github.com/NEUOJ-NG/NEUOJ-NG-backend/controller"
+	"github.com/gin-gonic/gin"
+)
 
-func InitRouter(r *gin.Engine) {
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+func InitRouter(r *gin.RouterGroup) {
+	r.GET("/ping", c.Ping)
 }

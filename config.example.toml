@@ -1,2 +1,5 @@
 [app]
 addr=":8080"
+allow_origin=["http://127.0.0.1:8080", "http://localhost:8080"]
+enable_swagger=true
+log_file="./NEUOJ-NG.log"

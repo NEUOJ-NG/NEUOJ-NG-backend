@@ -2,7 +2,7 @@ package util
 
 import (
 	"github.com/NEUOJ-NG/NEUOJ-NG-backend/config"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
@@ -15,7 +15,7 @@ func SetupConfigHotUpdate() {
 		for {
 			<-s
 			config.ReloadConfig()
-			log.Println("config reloaded")
+			log.Info("config reloaded")
 		}
 	}()
 }

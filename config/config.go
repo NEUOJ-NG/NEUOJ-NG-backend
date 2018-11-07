@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/BurntSushi/toml"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"path/filepath"
 	"sync"
 )
@@ -30,7 +30,7 @@ func ReloadConfig() {
 	if err != nil {
 		panic(err)
 	}
-	log.Println("parsing config.toml")
+	log.Info("parsing config.toml")
 	config := new(Config)
 	if _, err := toml.DecodeFile(filePath, &config); err != nil {
 		panic(err)
