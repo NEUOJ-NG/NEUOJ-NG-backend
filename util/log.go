@@ -10,6 +10,13 @@ import (
 )
 
 func SetupLog() {
+	level, err := log.ParseLevel(config.GetConfig().App.LogLevel)
+	if err != nil {
+		log.Fatal("parse log_level failed")
+		log.Fatal("please check config.toml")
+		panic(err)
+	}
+	log.SetLevel(level)
 	log.SetFormatter(&log.TextFormatter{
 		DisableColors: false,
 		FullTimestamp: true,

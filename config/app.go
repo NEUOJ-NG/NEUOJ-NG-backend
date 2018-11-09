@@ -12,6 +12,7 @@ type appConfig struct {
 	AllowOrigin   []string `toml:"allow_origin"`
 	EnableSwagger bool     `toml:"enable_swagger"`
 	LogFile       string   `toml:"log_file"`
+	LogLevel      string   `toml:"log_level"`
 	StoragePath   string   `toml:"storage_path"`
 }
 

@@ -3,6 +3,7 @@ addr=":8080"
 allow_origin=["*"]
 enable_swagger=true
 log_file="./storage/logs/NEUOJ-NG.log"
+log_level="info" # possible values: trace, debug, info, warn, warning, error, fatal, panic
 storage_path="./storage"
 
 [jwt]
