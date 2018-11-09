@@ -1,5 +1,6 @@
 [app]
 addr=":8080"
-allow_origin=["http://127.0.0.1:8080", "http://localhost:8080"]
+allow_origin=["*"]
 enable_swagger=true
-log_file="./NEUOJ-NG.log"
+log_file="./storage/logs/NEUOJ-NG.log"
+storage_path="./storage"

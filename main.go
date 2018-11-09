@@ -21,6 +21,9 @@ import (
 // @BasePath /api/v1
 
 func main() {
+	// setup storage dir
+	util.SetupStorage()
+
 	// setup log
 	util.SetupLog()
 
@@ -28,9 +31,15 @@ func main() {
 	app := gin.Default()
 
 	// setup CORS
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = config.GetConfig().App.AllowOrigin
-	app.Use(cors.New(corsConfig))
+	if len(config.GetConfig().App.AllowOrigin) == 1 &&
+		config.GetConfig().App.AllowOrigin[0] == "*" {
+		// allow all origin
+		app.Use(cors.Default())
+	} else {
+		corsConfig := cors.DefaultConfig()
+		corsConfig.AllowOrigins = config.GetConfig().App.AllowOrigin
+		app.Use(cors.New(corsConfig))
+	}
 
 	// enable swagger doc if enabled
 	if config.GetConfig().App.EnableSwagger {

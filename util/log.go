@@ -6,6 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"io"
 	"os"
+	"path/filepath"
 )
 
 func SetupLog() {
@@ -14,6 +15,7 @@ func SetupLog() {
 		FullTimestamp: true,
 	})
 	log.Info("setting up log file")
+	CreateDirOrPanic(filepath.Dir(config.GetConfig().App.LogFile))
 	logFile, err := os.OpenFile(
 		config.GetConfig().App.LogFile,
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY,
