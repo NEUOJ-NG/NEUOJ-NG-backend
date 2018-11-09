@@ -2,6 +2,7 @@ module github.com/NEUOJ-NG/NEUOJ-NG-backend
 
 require (
 	github.com/BurntSushi/toml v0.3.1
+	github.com/appleboy/gin-jwt v2.5.0+incompatible
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/gin-contrib/cors v0.0.0-20181008113111-488de3ec974f
@@ -18,5 +19,6 @@ require (
 	github.com/urfave/cli v1.20.0 // indirect
 	golang.org/x/crypto v0.0.0-20181106171534-e4dc69e5b2fd // indirect
 	golang.org/x/sys v0.0.0-20181106135930-3a76605856fd // indirect
+	gopkg.in/dgrijalva/jwt-go.v3 v3.2.0
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 )

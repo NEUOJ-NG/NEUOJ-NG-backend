@@ -4,3 +4,9 @@ allow_origin=["*"]
 enable_swagger=true
 log_file="./storage/logs/NEUOJ-NG.log"
 storage_path="./storage"
+
+[jwt]
+realm="NEUOJ-NG"
+key="secret"
+timeout=60 # in minute
+max_refresh_delay=10 # in minute

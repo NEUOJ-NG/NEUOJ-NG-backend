@@ -16,6 +16,7 @@ var (
 
 type Config struct {
 	App appConfig `toml:"app"`
+	JWT jwtConfig `toml:"jwt"`
 }
 
 func GetConfig() *Config {
