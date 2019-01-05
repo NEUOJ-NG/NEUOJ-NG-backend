@@ -63,7 +63,12 @@ func main() {
 	)
 	server.BeforeBegin = func(add string) {
 		log.Info("NEUOJ-NG-backend started")
+		log.Infof("listen %v", config.GetConfig().App.Addr)
 	}
-	server.ListenAndServe()
+	err := server.ListenAndServe()
+	if err != nil {
+		log.Fatal("failed to start server")
+		log.Fatal(err)
+	}
 	log.Info("NEUOJ-NG-backend terminated")
 }

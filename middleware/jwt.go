@@ -5,8 +5,10 @@ import (
 	"github.com/NEUOJ-NG/NEUOJ-NG-backend/model"
 	"github.com/NEUOJ-NG/NEUOJ-NG-backend/request"
 	"github.com/NEUOJ-NG/NEUOJ-NG-backend/response"
+	"github.com/NEUOJ-NG/NEUOJ-NG-backend/util/authentication"
 	"github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	jwt2 "gopkg.in/dgrijalva/jwt-go.v3"
 	"sync"
 	"time"
@@ -33,11 +35,22 @@ func newJWTMiddleware() *jwt.GinJWTMiddleware {
 			return jwt.MapClaims{}
 		},
 		IdentityHandler: func(claims jwt2.MapClaims) interface{} {
-			if v, ok := claims["username"]; ok {
-				return v
-			} else {
-				return ""
+			// TODO: get user info from DB
+			if username, ok := claims["username"]; ok {
+				if username == "admin" {
+					return &model.User{
+						Username:  username.(string),
+						Privilege: authentication.Admin,
+					}
+				} else {
+					return &model.User{
+						Username:  username.(string),
+						Privilege: authentication.StandardUser,
+					}
+				}
 			}
+
+			return nil
 		},
 		Authenticator: func(c *gin.Context) (interface{}, error) {
 			loginRequest := &request.LoginRequest{}
@@ -47,8 +60,9 @@ func newJWTMiddleware() *jwt.GinJWTMiddleware {
 			username := loginRequest.Username
 			password := loginRequest.Password
 			// TODO: perform auth with DB
-			if (username == "test" && password == "test") ||
-				(username == "admin" && password == "admin") {
+			if username == "test" && password == "test" ||
+				username == "admin" && password == "admin" {
+				log.Infof("user %v log in", username)
 				return &model.User{
 					Username: username,
 				}, nil
@@ -57,19 +71,15 @@ func newJWTMiddleware() *jwt.GinJWTMiddleware {
 			}
 		},
 		Authorizator: func(data interface{}, c *gin.Context) bool {
-			// TODO: perform authorization check in detail
-			// TODO: in another function with HandlerName and uid as params
-			if c.HandlerName() == "github.com/NEUOJ-NG/NEUOJ-NG-backend/controller.RefreshToken" {
-				return true
-			} else if v, ok := data.(string); ok {
-				return v == "admin"
+			if user, ok := data.(*model.User); ok {
+				return authentication.AuthCheck(c.HandlerName(), user)
 			}
 			return false
 		},
 		Unauthorized: func(ctx *gin.Context, code int, msg string) {
 			response.NewStandardError(ctx, code, msg)
 		},
-		TokenLookup:   "header: Authorization",
+		TokenLookup:   "header: Authorization, query: token",
 		TokenHeadName: "Bearer",
 		TimeFunc:      time.Now,
 	}
