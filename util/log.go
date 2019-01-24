@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-func SetupLog() {
+func SetupLog(disableColors bool, fullTimestamp bool) {
 	level, err := log.ParseLevel(config.GetConfig().App.LogLevel)
 	if err != nil {
 		log.Fatal("parse log_level failed")
@@ -18,8 +18,8 @@ func SetupLog() {
 	}
 	log.SetLevel(level)
 	log.SetFormatter(&log.TextFormatter{
-		DisableColors: false,
-		FullTimestamp: true,
+		DisableColors: disableColors,
+		FullTimestamp: fullTimestamp,
 	})
 	log.Info("setting up log file")
 	CreateDirOrPanic(filepath.Dir(config.GetConfig().App.LogFile))

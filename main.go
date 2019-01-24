@@ -25,7 +25,7 @@ func main() {
 	util.SetupStorage()
 
 	// setup log
-	util.SetupLog()
+	util.SetupLog(true, true)
 
 	// create Gin Engine with Logger and Recovery middleware
 	app := gin.Default()
